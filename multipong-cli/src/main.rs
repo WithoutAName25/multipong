@@ -19,5 +19,9 @@ fn main() {
 
     let now = Instant::now();
     send_test_msg(socket).expect("Failed to send");
-    println!("Received answer after {}ms: {}", now.elapsed().as_millis(), receive_msg(socket).expect("Failed to receive"));
+    println!(
+        "Received answer after {}ms: {}",
+        now.elapsed().as_millis(),
+        receive_msg(socket).expect("Failed to receive")
+    );
 }

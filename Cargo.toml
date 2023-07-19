@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "multipong-common",
+    "multipong-cli",
+    "multipong-server",
+]
