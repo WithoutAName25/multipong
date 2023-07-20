@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 multipong-common = { path = "../multipong-common" }
+bimap = "0.6.3"

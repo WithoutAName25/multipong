@@ -1,4 +1,6 @@
-use multipong_common::packages::{LoginRequest, Packet};
+use multipong_common::packets::Packet;
+use multipong_common::packets::Packet::LoginRequest;
+use multipong_common::serialization::Serializable;
 use std::net::{ToSocketAddrs, UdpSocket};
 
 fn main() {
@@ -14,10 +16,14 @@ fn main() {
         username: "test".to_string(),
     };
     let size = request
-        .write_packet(&mut buf)
-        .expect("buffer is big enough");
+        .serialize(&mut buf)
+        .expect("couldn't serialize packet");
 
     socket
         .send_to(&buf[..size], server)
         .expect("couldn't send data");
+
+    let (size, addr) = socket.recv_from(&mut buf).expect("couldn't receive data");
+    let (_, response) = Packet::deserialize(&buf[..size]).expect("couldn't deserialize packet");
+    println!("Received packet from {}: {:?}", addr, response);
 }
